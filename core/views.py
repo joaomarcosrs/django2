@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.shortcuts import redirect
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
-from .forms import ContatoForm, ProdutoModelForm
-from .models import Produto
+from .forms import ContatoForm, ProdutoModelForm, UploadModelForm
+from .models import Produto, Upload
 
 def index(request):
     context = {
@@ -46,3 +47,20 @@ def produto(request):
         return render(request, 'produto.html', context)
     else:
         return redirect('index')
+
+def image_upload(request):
+    if request.method == 'POST':
+        image_file = request.FILES['image_file']
+        if settings.USE_S3:
+            upload = Upload(imagem=image_file)
+            upload.save()
+            image_url = upload.imagem.url
+        else:
+            fs = FileSystemStorage()
+            filename = fs.save(image_file.name, image_file)
+            image_url = fs.url(filename)
+        context = {
+            'form': image_url
+        }
+        return render(request, 'upload.html', context)
+    return render(request, 'upload.html')
