@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
-from .forms import ContatoForm, ProdutoModelForm, UploadModelForm
-from .models import Produto, Upload
+from .forms import ContatoForm, ProdutoModelForm
+from .models import Produto
 
 def index(request):
     context = {
@@ -32,7 +32,7 @@ def produto(request):
         if str(request.method) == 'POST':
             form = ProdutoModelForm(request.POST, request.FILES)
             
-            if form.is_valid():
+            if form.is_valid():   
                 form.save()
                 messages.success(request, 'Produto salvo com sucesso!')
                 form = ProdutoModelForm()
@@ -47,7 +47,7 @@ def produto(request):
         return render(request, 'produto.html', context)
     else:
         return redirect('index')
-
+""" 
 def image_upload(request):
     if request.method == 'POST':
         image_file = request.FILES['image_file']
@@ -62,5 +62,5 @@ def image_upload(request):
         context = {
             'form': image_url
         }
-        return render(request, 'upload.html', context)
-    return render(request, 'upload.html')
+        return render(request, 'produto.html', context)
+    return render(request, 'produto.html') """
