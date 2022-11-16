@@ -29,9 +29,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://django2-jmrs.herokuapp.com/']
 
 
 # Application definition
@@ -82,11 +82,11 @@ WSGI_APPLICATION = 'django2.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-""" DATABASES = {
+DATABASES = {
     'default': dj_database_url.config()
-} """
+}
 
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': str(os.getenv('SQL_ENGINE')),
@@ -97,7 +97,7 @@ DATABASES = {
         'PORT': str(os.getenv('SQL_PORT')),
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
